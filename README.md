@@ -156,3 +156,6 @@ npm run dev
 - **`connection`** - Establishes real-time connection from the client.
 - **`new_alert` (Server Emit)** - Broadcasts newly reported safety incident data to all connected clients.
 - **`status_update` (Server Emit)** - Broadcasts updated incident workflow status.
+
+## Author
+Ishika Garg
