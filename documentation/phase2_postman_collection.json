@@ -1,0 +1,350 @@
+{
+  "info": {
+    "name": "Community & Safety Alerts API - Phase 2",
+    "description": "API requests for Phase 2 user authentication, resource sharing, skill sharing, safety alerts, and analytics dashboard.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Smith\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Update User Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Smith Updated\",\n  \"phone\": \"+15559876543\",\n  \"locationName\": \"Greenwood Sector 5\",\n  \"address\": \"Building 7, Suite A\",\n  \"skills\": [\"Mentorship\", \"Technical Support\"],\n  \"resources\": [\"Textbook\", \"Toolbox\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "profile"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Resource Sharing",
+      "item": [
+        {
+          "name": "Get Resources",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/resources?category=&search=&location=",
+              "host": ["{{baseUrl}}"],
+              "path": ["resources"],
+              "query": [
+                { "key": "category", "value": "" },
+                { "key": "search", "value": "" },
+                { "key": "location", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Resource Listing",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gardening Toolbox\",\n  \"description\": \"Includes trowel, pruning shears, gloves, and cultivator.\",\n  \"category\": \"Tools\",\n  \"location\": \"Greenwood Sector 5\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/resources",
+              "host": ["{{baseUrl}}"],
+              "path": ["resources"]
+            }
+          }
+        },
+        {
+          "name": "Request to Borrow Resource",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/resources/{{resourceId}}/request",
+              "host": ["{{baseUrl}}"],
+              "path": ["resources", "{{resourceId}}", "request"]
+            }
+          }
+        },
+        {
+          "name": "Approve Borrow Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requesterId\": \"{{requesterUserId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/resources/{{resourceId}}/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["resources", "{{resourceId}}", "approve"]
+            }
+          }
+        },
+        {
+          "name": "Return Resource",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/resources/{{resourceId}}/return",
+              "host": ["{{baseUrl}}"],
+              "path": ["resources", "{{resourceId}}", "return"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Skill Sharing",
+      "item": [
+        {
+          "name": "Get Skill Listings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/skills?category=&search=",
+              "host": ["{{baseUrl}}"],
+              "path": ["skills"],
+              "query": [
+                { "key": "category", "value": "" },
+                { "key": "search", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Skill Listing",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"PC & Hardware Technical Support\",\n  \"description\": \"Can help with clean OS installs, RAM upgrades, malware removal.\",\n  \"category\": \"Technical Support\",\n  \"availability\": \"Weekday evenings, 6 PM to 9 PM\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/skills",
+              "host": ["{{baseUrl}}"],
+              "path": ["skills"]
+            }
+          }
+        },
+        {
+          "name": "Request Skill Assistance",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Hello, my computer has been freezing frequently. Could you help check my RAM next Tuesday?\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/skills/{{skillId}}/request",
+              "host": ["{{baseUrl}}"],
+              "path": ["skills", "{{skillId}}", "request"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Neighborhood Watch Alerts",
+      "item": [
+        {
+          "name": "Get Safety Alerts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alerts?category=&severity=&status=",
+              "host": ["{{baseUrl}}"],
+              "path": ["alerts"],
+              "query": [
+                { "key": "category", "value": "" },
+                { "key": "severity", "value": "" },
+                { "key": "status", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Analytics Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/alerts/analytics",
+              "host": ["{{baseUrl}}"],
+              "path": ["alerts", "analytics"]
+            }
+          }
+        },
+        {
+          "name": "Create Incident Alert",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Water Main Leakage\",\n  \"description\": \"Large amount of water flowing out of the pavement near the neighborhood park entrance.\",\n  \"category\": \"Water Leakage\",\n  \"severity\": \"High\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060,\n  \"locationName\": \"Greenwood Park South Gate\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alerts",
+              "host": ["{{baseUrl}}"],
+              "path": ["alerts"]
+            }
+          }
+        },
+        {
+          "name": "Update Alert Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Investigating\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/alerts/{{alertId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["alerts", "{{alertId}}", "status"]
+            }
+          }
+        },
+        {
+          "name": "Delete Alert",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/alerts/{{alertId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["alerts", "{{alertId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": { "type": "text/javascript", "exec": [""] }
+    },
+    {
+      "listen": "test",
+      "script": { "type": "text/javascript", "exec": [""] }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5002/api", "type": "string" },
+    { "key": "authToken", "value": "", "type": "string" },
+    { "key": "resourceId", "value": "", "type": "string" },
+    { "key": "requesterUserId", "value": "", "type": "string" },
+    { "key": "skillId", "value": "", "type": "string" },
+    { "key": "requestId", "value": "", "type": "string" },
+    { "key": "alertId", "value": "", "type": "string" }
+  ]
+}
