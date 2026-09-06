@@ -1,0 +1,34 @@
+# Render Blueprint for Phase 2 - Neighborhood Watch Alert System
+# Deploy this repo on Render: New > Blueprint > select this repo.
+# After applying, fill in the blank env vars in the Render dashboard:
+#   - commune-phase2-backend  -> MONGO_URI, JWT_SECRET
+#   - commune-phase2-frontend -> VITE_API_URL (e.g. https://commune-phase2-backend.onrender.com/api)
+#                                VITE_SOCKET_URL (e.g. https://commune-phase2-backend.onrender.com)
+# IMPORTANT: Deploy the backend first, then set the URLs to point at it before building the frontend.
+
+services:
+  - type: web
+    name: commune-phase2-backend
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+
+  - type: web
+    name: commune-phase2-frontend
+    runtime: static
+    rootDir: frontend
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false
+      - key: VITE_SOCKET_URL
+        sync: false

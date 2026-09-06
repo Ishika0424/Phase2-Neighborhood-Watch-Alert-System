@@ -8,8 +8,8 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [loading, setLoading] = useState(true);
 
-  // Set default API URL for Phase 2
-  const API_URL = 'http://localhost:5002/api';
+  // Set default API URL for Phase 2 (overridable at build time via VITE_API_URL)
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5002/api';
   axios.defaults.baseURL = API_URL;
 
   useEffect(() => {

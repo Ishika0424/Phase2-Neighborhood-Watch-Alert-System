@@ -18,8 +18,8 @@ const Dashboard = () => {
   useEffect(() => {
     fetchAlerts();
 
-    // Establish Socket.io connection for real-time alerts
-    const socket = io('http://localhost:5002');
+    // Establish Socket.io connection for real-time alerts (overridable via VITE_SOCKET_URL)
+    const socket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5002');
 
     socket.on('newAlert', (newAlert) => {
       // Prepend to current alerts list

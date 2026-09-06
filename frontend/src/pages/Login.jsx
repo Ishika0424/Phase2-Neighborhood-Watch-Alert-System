@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { Mail, Lock, Shield, ArrowRight } from 'lucide-react';
+import { Mail, Lock, ShieldAlert, ArrowRight, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -28,24 +29,25 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 relative overflow-hidden">
-      {/* Background Glows */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 px-4 py-12 relative overflow-hidden">
+      {/* Ambient Safety Red Background Glows */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-rose-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/15 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="w-full max-w-md z-10">
         <div className="text-center mb-8">
-          <div className="inline-flex bg-indigo-600 p-3 rounded-2xl shadow-xl shadow-indigo-500/25 mb-4">
-            <Shield className="h-8 w-8 text-white" />
+          <div className="inline-flex bg-gradient-to-tr from-rose-600 to-amber-600 p-3.5 rounded-2xl shadow-xl shadow-rose-500/25 mb-4 border border-rose-400/30">
+            <ShieldAlert className="h-8 w-8 text-white animate-pulse" />
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-white">Welcome Back</h1>
-          <p className="text-sm text-slate-400 mt-2">Access your neighborhood community sharing platform</p>
+          <h1 className="text-3xl font-extrabold tracking-tight text-white font-outfit">Neighborhood Watch</h1>
+          <p className="text-sm text-slate-400 mt-2">Safety Alert & Incident Response System</p>
         </div>
 
-        <div className="glass-panel rounded-2xl p-8 shadow-2xl">
+        <div className="glass-panel rounded-2xl p-8 shadow-2xl border border-white/10">
           {error && (
-            <div className="bg-red-500/15 border border-red-500/30 text-red-300 text-sm px-4 py-3 rounded-lg mb-6">
-              {error}
+            <div className="bg-rose-500/15 border border-rose-500/30 text-rose-300 text-sm px-4 py-3 rounded-xl mb-6 flex items-center gap-2">
+              <span>⚠️</span>
+              <span>{error}</span>
             </div>
           )}
 
@@ -55,15 +57,15 @@ const Login = () => {
                 Email Address
               </label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
-                  <Mail className="h-4.5 w-4.5" />
+                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                  <Mail className="h-4 w-4" />
                 </span>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-900/60 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-sm"
+                  className="glass-input w-full pl-10 pr-4 py-3 rounded-xl text-white placeholder-slate-500 text-sm"
                   placeholder="name@domain.com"
                 />
               </div>
@@ -74,35 +76,42 @@ const Login = () => {
                 Password
               </label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400">
-                  <Lock className="h-4.5 w-4.5" />
+                <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
+                  <Lock className="h-4 w-4" />
                 </span>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-900/60 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all text-sm"
+                  className="glass-input w-full pl-10 pr-10 py-3 rounded-xl text-white placeholder-slate-500 text-sm"
                   placeholder="••••••••"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white"
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-800/50 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 hover:shadow-indigo-600/40 text-sm"
+              className="btn-danger-gradient w-full py-3.5 text-white font-semibold rounded-xl text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
-              {loading ? 'Authenticating...' : 'Sign In'}
+              {loading ? 'Authenticating...' : 'Sign In to Watch Hub'}
               <ArrowRight className="h-4 w-4" />
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <span className="text-xs text-slate-400">
-              New to the neighborhood?{' '}
-              <Link to="/register" className="text-indigo-400 hover:text-indigo-300 font-semibold underline underline-offset-4">
-                Create an account
+              New resident?{' '}
+              <Link to="/register" className="text-rose-400 hover:text-rose-300 font-semibold underline underline-offset-4">
+                Register account
               </Link>
             </span>
           </div>
@@ -113,3 +122,4 @@ const Login = () => {
 };
 
 export default Login;
+

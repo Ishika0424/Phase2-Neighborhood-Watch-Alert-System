@@ -11,7 +11,7 @@ const additionalUsersData = [
     name: 'Monix',
     email: 'mooni123@gmail.com',
     password: 'password123',
-    phone: '555-0101',
+    phone: '+91 98765 43210',
     address: '456 Oak Street',
     locationName: 'Oak Street'
   },
@@ -19,7 +19,7 @@ const additionalUsersData = [
     name: 'Bobby',
     email: 'bob567@gmail.com',
     password: 'pass123',
-    phone: '555-0102',
+    phone: '+91 87654 32109',
     address: '789 Maple Avenue',
     locationName: 'Maple Avenue'
   },
@@ -27,7 +27,7 @@ const additionalUsersData = [
     name: 'Alina Deshmukh',
     email: 'alina123@gmail.com',
     password: 'passing123',
-    phone: '555-0103',
+    phone: '+91 76543 21098',
     address: '321 Pine Road',
     locationName: 'Pine Road'
   }
@@ -54,15 +54,16 @@ const seedData = async () => {
         name: 'Ishika Garg',
         email: 'ishika.garg123@gmail.com',
         password: 'password123',
-        phone: '555-0199',
+        phone: '+91 99999 88888',
         address: '123 Greenwood Lane',
         locationName: 'Greenwood'
       });
       console.log(`Created primary user: ${mainUser.email} (Password: password123)`);
     } else {
       mainUser.password = 'password123'; // Reset password to password123 so it's always testable
+      mainUser.phone = '+91 99999 88888';
       await mainUser.save();
-      console.log(`Using and updating primary user: ${mainUser.email} (Password set to: password123)`);
+      console.log(`Using and updating primary user: ${mainUser.email} (Password set to: password123, Phone set to: +91 99999 88888)`);
     }
 
     // Delete any stale users that are not in our list
